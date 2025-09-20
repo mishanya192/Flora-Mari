@@ -1,0 +1,45 @@
+{% extends 'shop/base.html' %}
+
+{% block content %}
+<!-- Простые кнопки фильтрации -->
+<div class="text-center mb-4">
+    <div class="btn-group">
+        <a href="?" class="btn btn-outline-success {% if not current_category %}active{% endif %}">Все товары</a>
+        <a href="?category=BOUQUET" class="btn btn-outline-success {% if current_category == 'BOUQUET' %}active{% endif %}">Букеты</a>
+        <a href="?category=POT" class="btn btn-outline-success {% if current_category == 'POT' %}active{% endif %}">Растения</a>
+        <a href="?category=DRIED" class="btn btn-outline-success {% if current_category == 'DRIED' %}active{% endif %}">Сухоцветы</a>
+        <a href="?category=ACCESSORY" class="btn btn-outline-success {% if current_category == 'ACCESSORY' %}active{% endif %}">Аксессуары</a>
+    </div>
+</div>
+
+<h2 class="text-center mb-4">
+    {% if current_category %}
+        {{ products.0.get_category_display }}  {# Безопасно, т.к. есть проверка вьюхи #}
+    {% else %}
+        Наши товары
+    {% endif %}
+</h2>
+
+<div class="row">
+    {% for product in products %}
+    <div class="col-md-4 mb-4">
+        <div class="card product-card h-100">
+            {% if product.image %}
+            <img src="{{ product.image.url }}" class="card-img-top" alt="{{ product.name }}" style="height: 200px; object-fit: cover;">
+            {% endif %}
+            <div class="card-body">
+                <h5 class="card-title">{{ product.name }}</h5>
+                <p class="card-text">{{ product.description|truncatewords:20 }}</p>
+                <p class="text-success fw-bold">{{ product.price }} BYN</p>
+                <a href="{% url 'shop:product_detail' product.id %}" class="btn btn-outline-success">Подробнее</a>
+                <a href="{% url 'cart:add_to_cart' product.id %}" class="btn btn-success">В корзину</a>
+            </div>
+        </div>
+    </div>
+    {% empty %}
+    <div class="col-12">
+        <p class="text-center">Товары пока не добавлены</p>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

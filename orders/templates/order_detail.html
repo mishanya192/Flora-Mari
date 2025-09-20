@@ -1,0 +1,28 @@
+{% extends 'shop/base.html' %}
+
+{% block content %}
+<div class="container">
+    <h1 class="my-4">Мои заказы</h1>
+    
+    {% if orders %}
+    <div class="list-group">
+        {% for order in orders %}
+        <div class="list-group-item">
+            <div class="d-flex justify-content-between">
+                <h5>Заказ #{{ order.id }}</h5>
+                <span class="badge bg-secondary">{{ order.get_status_display }}</span>
+            </div>
+            <p>Дата: {{ order.created_at|date:"d.m.Y H:i" }}</p>
+            <p>Сумма: {{ order.total_amount }} ₽</p>
+            <a href="{% url 'orders:order_detail' order.id %}" class="btn btn-outline-success btn-sm">Подробнее</a>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <p class="text-center">У вас еще нет заказов</p>
+    <div class="text-center">
+        <a href="/" class="btn btn-success">Начать покупки</a>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}
