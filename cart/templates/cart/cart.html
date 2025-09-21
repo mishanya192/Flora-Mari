@@ -43,7 +43,9 @@
                 <div class="card-body">
                     <h5 class="card-title">Итого</h5>
                     <p class="card-text">Общая сумма: <strong>{{ total }} BYN</strong></p>
-                    <a href="{% url 'orders:create_order' %}" class="btn btn-success w-100">Оформить заказ</a>
+                    <form method="get" action="{% url 'orders:create_order' %}">
+                        <button type="submit" class="btn btn-success w-100">Оформить заказ</button>
+                    </form>
                     <a href="/" class="btn btn-outline-secondary w-100 mt-2">Продолжить покупки</a>
                 </div>
             </div>

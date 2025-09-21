@@ -17,6 +17,5 @@ def product_list(request):
     })
 
 def product_detail(request, product_id):
-    """Детальная страница товара"""
     product = get_object_or_404(Product, id=product_id, is_active=True)
     return render(request, 'shop/product_detail.html', {'product': product})

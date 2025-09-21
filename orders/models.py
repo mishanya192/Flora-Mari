@@ -9,6 +9,24 @@ class Order(models.Model):
         ('completed', 'Завершен'),
         ('cancelled', 'Отменен'),
     ]
+
+    address = models.TextField(
+        verbose_name="Адрес доставки",
+        blank=True,
+        help_text="Полный адрес с индексом"
+    )
+    
+    phone = models.CharField(
+        max_length=20,
+        verbose_name="Телефон для связи",
+        blank=True
+    )
+    
+    comments = models.TextField(
+        verbose_name="Комментарии к заказу",
+        blank=True,
+        help_text="Пожелания по доставке или особые указания"
+    )
     
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL,

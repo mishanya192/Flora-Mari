@@ -3,24 +3,67 @@
 {% block content %}
 <div class="container">
     <div class="row">
+        <!-- Изображение товара -->
         <div class="col-md-6">
             {% if product.image %}
-            <img src="{{ product.image.url }}" class="img-fluid" alt="{{ product.name }}">
+            <img src="{{ product.image.url }}" class="img-fluid rounded" alt="{{ product.name }}" 
+                 style="max-height: 500px; width: 100%; object-fit: cover;">
+            {% else %}
+            <div class="bg-light rounded d-flex align-items-center justify-content-center" 
+                 style="height: 300px;">
+                <span class="display-1">🌸</span>
+            </div>
             {% endif %}
         </div>
+        
+        <!-- Информация о товаре -->
         <div class="col-md-6">
-            <h1>{{ product.name }}</h1>
-            <p class="text-muted">{{ product.get_category_display }}</p>
-            <p>{{ product.description }}</p>
-            <p class="h3 text-success">{{ product.price }} ₽</p>
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="/">Главная</a></li>
+                    <li class="breadcrumb-item"><a href="/?category={{ product.category }}">
+                        {{ product.get_category_display }}
+                    </a></li>
+                    <li class="breadcrumb-item active">{{ product.name }}</li>
+                </ol>
+            </nav>
             
-            <div class="mt-4">
-                <a href="{% url 'cart:add_to_cart' product.id %}" class="btn btn-success btn-lg">
+            <h1 class="mb-3">{{ product.name }}</h1>
+            
+            <div class="d-flex align-items-center mb-3">
+                <span class="badge bg-success me-2">{{ product.get_category_display }}</span>
+                <span class="text-muted">Артикул: #{{ product.id }}</span>
+            </div>
+            
+            <p class="lead">{{ product.description }}</p>
+            
+            <div class="d-flex align-items-center mb-4">
+                <span class="display-6 text-success me-3">{{ product.price }} BYN</span>
+                {% if product.is_active %}
+                <span class="badge bg-success">В наличии</span>
+                {% else %}
+                <span class="badge bg-secondary">Нет в наличии</span>
+                {% endif %}
+            </div>
+            
+            <!-- Кнопки действий -->
+            <div class="d-grid gap-2 d-md-flex">
+                <a href="{% url 'cart:add_to_cart' product.id %}" class="btn btn-success btn-lg flex-fill">
                     🛒 Добавить в корзину
                 </a>
-                <a href="{% url 'product_list' %}" class="btn btn-outline-secondary">
-                    ← Назад к каталогу
+                <a href="/" class="btn btn-outline-secondary btn-lg">
+                    ← Назад
                 </a>
+            </div>
+            
+            <!-- Дополнительная информация -->
+            <div class="mt-5">
+                <h4>📦 Условия доставки</h4>
+                <ul class="list-unstyled">
+                    <li>✅ Бесплатная доставка при заказе от 100 BYN</li>
+                    <li>✅ Доставка в течение 1-2 часов по городу</li>
+                    <li>✅ Возможность самовывоза</li>
+                </ul>
             </div>
         </div>
     </div>
