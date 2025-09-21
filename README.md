@@ -39,7 +39,7 @@ Flora Mari - современный интернет-магазин цветов
 
 ### 1. Клонирование и настройка
 ```bash
-git clone https://github.com/ваш-username/Flora-Mari.git
+git clone https://github.com/mishanya192/Flora-Mari.git
 cd Flora-Mari
 
 # Виртуальное окружение
